@@ -5,7 +5,7 @@
 //  Created by Dialid Santiago on 31/01/2021.
 //
 
-#include "SimpleMcMain1.hpp"
+#include "SimpleMCMain1.hpp"
 #include "Random1.hpp"
 #include <iostream>
 #include <cmath>
