@@ -12,11 +12,11 @@
 
 using namespace std;
 
-double SimpleMonteCarlo1(double Expiry,
-                         double Strike,
-                         double Spot,
-                         double Vol,
-                         double r,
+double SimpleMonteCarlo1(double Expiry, // T
+                         double Strike, // K
+                         double Spot, // S0
+                         double Vol, // sigma
+                         double r, // r
                          unsigned long NumberOfPaths
                          )
 {
@@ -53,22 +53,22 @@ int main()
     unsigned long NumberOfPath;
     
     //read in parameters
-    cout << "\nEnter expiry\n";
+    cout << "\nEnter expiry T: \n";
     cin >> Expiry;
     
-    cout << "\nEnter Strike\n";
+    cout << "\nEnter Strike K:\n";
     cin >> Strike;
     
-    cout << "\nEnter spot\n";
+    cout << "\nEnter spot S0:\n";
     cin >> Spot;
     
-    cout << "\nEnter vol\n";
+    cout << "\nEnter vol sigma:\n";
     cin >> Vol;
     
     cout << "\nEnter r\n";
     cin >> r;
     
-    cout << "\n Number of paths\n";
+    cout << "\nNumber of paths\n";
     cin >> NumberOfPath;
     
     double result = SimpleMonteCarlo1(Expiry,
@@ -77,8 +77,8 @@ int main()
                                       Vol,
                                       r,
                                       NumberOfPath);
-    cout << "the price is "<< result << "\n";
-    
+    cout << "The price is "<< result << "\n";
+    cout << "Enter any string to terminate the process and hit Enter. " << "\n";
     double tmp;
     cin >>tmp;
 
