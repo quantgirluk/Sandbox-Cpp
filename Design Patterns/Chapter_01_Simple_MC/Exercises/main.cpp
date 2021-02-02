@@ -2,18 +2,19 @@
 //  SimpleMcMain1.cpp
 //  Sandbox-Cpp
 //
-//  Created by Dialid Santiago on 31/01/2021.
+//  Created by Dialid Santiago on 02/02/2021.
 //
 
 #include "SimpleMCMain1.hpp"
-#include "Random1.hpp"
+#include "Random.hpp"
+#include "PayOff.hpp"
 #include <iostream>
 #include <cmath>
 
 using namespace std;
 
-double SimpleMonteCarlo1(double Expiry, // T
-                         double Strike, // K
+double SimpleMonteCarlo(const PayOff& thePayOff,
+                         double Expiry, // T
                          double Spot, // S0
                          double Vol, // sigma
                          double r, // r
@@ -32,8 +33,7 @@ double SimpleMonteCarlo1(double Expiry, // T
     for (unsigned long i=0; i<NumberOfPaths; i++) {
         double thisGaussian = GetOneGaussianByBoxMuller();
         thisSpot   = movedSpot*exp(rootVariance*thisGaussian);
-        double thisPayOff = thisSpot - Strike;
-        thisPayOff = thisPayOff > 0 ? thisPayOff : 0;
+        double thisPayOff = thePayOff(thisSpot);
         runningSum += thisPayOff;
     }
     
@@ -71,14 +71,25 @@ int main()
     cout << "\nNumber of MC paths:\n";
     cin >> NumberOfPath;
     
-    double result = SimpleMonteCarlo1(Expiry,
-                                      Strike,
+    PayOff callPayOff(Strike, PayOff::call);
+    PayOff putPayOff(Strike, PayOff::put);
+    
+    double resultCall = SimpleMonteCarlo(callPayOff,
+                                          Expiry,
                                       Spot,
                                       Vol,
                                       r,
                                       NumberOfPath);
-    cout << "The Price is "<< result << "\n";
-    cout << "Enter any string to terminate the process and hit Enter. " << "\n";
+    double resultPut = SimpleMonteCarlo(putPayOff,
+                                          Expiry,
+                                      Spot,
+                                      Vol,
+                                      r,
+                                      NumberOfPath);
+
+    
+    cout << "The Prices are:\n"<< resultCall << " for the Call\n";
+    cout << resultPut<< " for the Put\n";
     double tmp;
     cin >>tmp;
 
